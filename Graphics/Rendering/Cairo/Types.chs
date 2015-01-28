@@ -27,7 +27,7 @@ module Graphics.Rendering.Cairo.Types (
   , LineCap(..)
   , LineJoin(..)
   , ScaledFont(..), unScaledFont
-  , FontFace(..), unFontFace
+  , FontFace(..), unFontFace, withFontFace, mkFontFace
   , Glyph, unGlyph
   , TextExtentsPtr
   , TextExtents(..)
@@ -169,8 +169,18 @@ unPattern (Pattern x) = x
 {#pointer *scaled_font_t as ScaledFont newtype#}
 unScaledFont (ScaledFont x) = x
 
-{#pointer *font_face_t as FontFace newtype#}
+{#pointer *font_face_t as FontFace foreign newtype#}
 unFontFace (FontFace x) = x
+
+withFontFace (FontFace fptr) = withForeignPtr fptr
+
+mkFontFace :: Ptr FontFace -> IO FontFace
+mkFontFace fontFacePtr = do
+  fontFaceForeignPtr <- newForeignPtr fontFaceDestroy fontFacePtr
+  return (FontFace fontFaceForeignPtr)
+
+foreign import ccall unsafe "&cairo_font_face_destroy"
+  fontFaceDestroy :: FinalizerPtr FontFace
 
 {#pointer *glyph_t as Glyph newtype#}
 unGlyph (Glyph x) = x

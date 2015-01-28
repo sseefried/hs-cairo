@@ -158,6 +158,8 @@ module Graphics.Rendering.Cairo (
 
   -- ** Text
   , selectFontFace
+  , setFontFace
+  , getFontFace
   , setFontSize
   , setFontMatrix
   , getFontMatrix
@@ -1340,6 +1342,13 @@ selectFontFace ::
   -> Render ()
 selectFontFace = liftRender3 Internal.selectFontFace
 
+
+setFontFace :: FontFace -> Render ()
+setFontFace = liftRender1 Internal.setFontFace
+
+getFontFace :: Render FontFace
+getFontFace = liftRender0 Internal.getFontFace
+
 -- | Sets the current font matrix to a scale by a factor of @size@, replacing
 -- any font matrix previously set with 'setFontSize' or 'setFontMatrix'. This
 -- results in a font size of size user space units. (More precisely, this matrix
@@ -1374,7 +1383,7 @@ getFontMatrix = liftRender0 Internal.getFontMatrix
 --
 setFontOptions :: FontOptions -> Render ()
 setFontOptions = liftRender1 Internal.setFontOptions
-	
+
 -- | A drawing operator that generates the shape from a string of Unicode
 -- characters, rendered according to the current font face, font size (font
 -- matrix), and font options.

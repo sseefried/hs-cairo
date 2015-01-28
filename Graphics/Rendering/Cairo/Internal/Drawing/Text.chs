@@ -28,6 +28,8 @@ selectFontFace c string slant weight =
     {# call select_font_face #}
         c string' (cFromEnum slant) (cFromEnum weight)
 
+{#fun set_font_face    as setFontFace    { unCairo `Cairo', withFontFace* `FontFace' } -> `()' #}
+{#fun get_font_face    as getFontFace    { unCairo `Cairo' } -> `FontFace' mkFontFace* #}
 {#fun set_font_size    as setFontSize    { unCairo `Cairo', `Double' } -> `()'#}
 {#fun set_font_matrix  as setFontMatrix  { unCairo `Cairo', `Matrix' } -> `()'#}
 {#fun get_font_matrix  as getFontMatrix  { unCairo `Cairo', alloca- `Matrix' peek*} -> `()'#}
