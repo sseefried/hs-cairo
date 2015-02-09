@@ -18,7 +18,7 @@ import Distribution.Text
 
 import System.Environment
 import System.Process
-import System.Exit
+import System.Exit hiding (die)
 import System.FilePath
 import System.Directory
 import qualified Control.Exception as Exception
