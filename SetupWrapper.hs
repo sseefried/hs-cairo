@@ -5,7 +5,7 @@ module SetupWrapper (setupWrapper) where
 
 import Distribution.Package
 import Distribution.Compiler
-import Distribution.Simple.Utils
+import Distribution.Simple.Utils as DSU
 import Distribution.Simple.Program
 import Distribution.Simple.Compiler
 import Distribution.Simple.BuildPaths (exeExtension)
@@ -18,7 +18,7 @@ import Distribution.Text
 
 import System.Environment
 import System.Process
-import System.Exit hiding (die)
+import System.Exit
 import System.FilePath
 import System.Directory
 import qualified Control.Exception as Exception
@@ -88,7 +88,7 @@ setupWrapper setupHsFile = do
       let cabalDep = Dependency (PackageName "Cabal")
                                 (orLaterVersion useCabalVersion)
       case PackageIndex.lookupDependency index cabalDep of
-        []   -> die $ "The package requires Cabal library version "
+        []   -> DSU.die $ "The package requires Cabal library version "
                    ++ display useCabalVersion
                    ++ " but no suitable version is installed."
         pkgs -> return $ bestVersion (map fst pkgs)
